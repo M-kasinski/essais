@@ -32,7 +32,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── HEADER ── */
   .masthead {
     border-bottom: 1px solid var(--border);
     padding: 2rem 3rem;
@@ -59,7 +58,6 @@
     color: var(--accent);
   }
 
-  /* ── HERO ── */
   .hero {
     max-width: 860px;
     margin: 0 auto;
@@ -110,7 +108,6 @@
     font-weight: 400;
   }
 
-  /* ── BODY ── */
   .content {
     max-width: 720px;
     margin: 0 auto;
@@ -149,7 +146,6 @@
     font-weight: 500;
   }
 
-  /* ── PULL QUOTE ── */
   .pullquote {
     margin: 3rem -2rem;
     padding: 2.5rem 3rem;
@@ -177,7 +173,6 @@
     display: block;
   }
 
-  /* ── DIAGRAMS ── */
   .diagram-wrap {
     margin: 3.5rem -1rem;
     padding: 2.5rem 2rem;
@@ -199,7 +194,6 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  /* ── PILLARS ── */
   .pillars {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -240,7 +234,6 @@
     margin: 0;
   }
 
-  /* ── COMPARISON TABLE ── */
   .compare {
     width: 100%;
     border-collapse: collapse;
@@ -287,7 +280,6 @@
     font-weight: 500;
   }
 
-  /* ── FOOTNOTE ── */
   .footnote {
     margin-top: 6rem;
     padding-top: 2rem;
@@ -326,7 +318,6 @@
 
 <article class="content">
 
-  <!-- SECTION 1 -->
   <div class="section">
     <h2><span class="num">01 — Héritage</span>Une contrainte déguisée en design</h2>
 
@@ -346,45 +337,36 @@
       <p>"L'index n'a jamais été le produit. C'était le meilleur outil disponible pour accéder au produit — la connaissance."</p>
     </div>
 
-    <!-- DIAGRAM 1 -->
     <div class="diagram-wrap">
       <div class="diagram-title">Fig. 01 — L'architecture héritée (1998–2025)</div>
       <svg viewBox="0 0 680 180" width="100%" style="overflow:visible">
-        <!-- Background nodes -->
-        <!-- WEB -->
         <rect x="10" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
         <text x="70" y="72" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">LE WEB</text>
         <text x="70" y="94" text-anchor="middle" fill="#5A5550" font-size="22">⊞</text>
         <text x="70" y="118" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">N milliards</text>
         <text x="70" y="130" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">de documents</text>
 
-        <!-- Arrow 1 -->
         <path d="M132 90 L168 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
         <text x="150" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">crawl</text>
 
-        <!-- INDEX -->
         <rect x="170" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
         <text x="230" y="72" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">INDEX</text>
         <text x="230" y="95" text-anchor="middle" fill="#5A5550" font-size="20">≡</text>
         <text x="230" y="118" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">mots-clés</text>
         <text x="230" y="130" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">+ PageRank</text>
 
-        <!-- Arrow 2 -->
         <path d="M292 90 L328 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
         <text x="310" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">match</text>
 
-        <!-- REQUETE -->
         <rect x="330" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
         <text x="390" y="69" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">REQUÊTE</text>
         <text x="390" y="92" text-anchor="middle" fill="#5A5550" font-size="18" font-family="'IBM Plex Mono',monospace">"jaguar"</text>
         <text x="390" y="116" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">2–5 mots</text>
         <text x="390" y="128" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">sans contexte</text>
 
-        <!-- Arrow 3 -->
         <path d="M452 90 L488 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
         <text x="470" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">rank</text>
 
-        <!-- RESULTAT -->
         <rect x="490" y="40" width="180" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
         <text x="580" y="68" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">RÉSULTATS</text>
         <text x="580" y="88" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 Jaguar (animal)</text>
@@ -392,7 +374,6 @@
         <text x="580" y="120" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 Jaguar Land Rover</text>
         <text x="580" y="136" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 ...</text>
 
-        <!-- Label problème -->
         <text x="580" y="168" text-anchor="middle" fill="#8A3030" font-size="9" font-family="'IBM Plex Mono',monospace">redécouvert à chaque requête</text>
 
         <defs>
@@ -405,7 +386,6 @@
 
   </div>
 
-  <!-- SECTION 2 -->
   <div class="section">
     <h2><span class="num">02 — Rupture</span>Ce que les LLM changent vraiment</h2>
 
@@ -434,7 +414,6 @@
     </p>
   </div>
 
-  <!-- SECTION 3 -->
   <div class="section">
     <h2><span class="num">03 — Nouveau paradigme</span>La connaissance compilée</h2>
 
@@ -442,15 +421,11 @@
       Le nouveau paradigme ne part pas de la requête. Il part de la source. Les documents bruts ne sont plus le produit final — ils sont la matière première d'une couche de connaissance structurée, maintenue, et vivante.
     </p>
 
-    <!-- DIAGRAM 2 -->
     <div class="diagram-wrap">
       <div class="diagram-title">Fig. 02 — Le nouveau paradigme : compilation avant requête</div>
       <svg viewBox="0 0 680 320" width="100%" style="overflow:visible">
-
-        <!-- PHASE GAUCHE : compilation -->
         <text x="0" y="16" fill="#D4A843" font-size="9" letter-spacing="2" font-family="'IBM Plex Mono',monospace">PHASE 1 — COMPILATION (une fois)</text>
 
-        <!-- Sources -->
         <rect x="0" y="28" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="45" y="50" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Articles</text>
 
@@ -463,13 +438,11 @@
         <rect x="0" y="160" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="45" y="182" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Transcripts</text>
 
-        <!-- Arrows to LLM compiler -->
         <path d="M92 46 L148 100" stroke="#2A2A26" stroke-width="1"/>
         <path d="M92 90 L148 108" stroke="#2A2A26" stroke-width="1"/>
         <path d="M92 134 L148 116" stroke="#2A2A26" stroke-width="1"/>
         <path d="M92 178 L148 124" stroke="#2A2A26" stroke-width="1"/>
 
-        <!-- LLM Compiler box -->
         <rect x="150" y="56" width="120" height="110" rx="4" fill="#1A1A17" stroke="#D4A843" stroke-width="1"/>
         <text x="210" y="88" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">LLM</text>
         <text x="210" y="106" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">COMPILER</text>
@@ -477,10 +450,8 @@
         <text x="210" y="145" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">relie · note</text>
         <text x="210" y="160" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">contradictions</text>
 
-        <!-- Arrow to Wiki -->
         <path d="M272 111 L318 111" stroke="#D4A843" stroke-width="1.5" marker-end="url(#arrgold)"/>
 
-        <!-- WIKI block -->
         <rect x="320" y="28" width="170" height="200" rx="4" fill="#131310" stroke="#D4A843" stroke-width="1"/>
         <text x="405" y="56" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">WIKI COMPILÉ</text>
 
@@ -501,22 +472,17 @@
 
         <text x="405" y="226" text-anchor="middle" fill="#3A5C42" font-size="9" letter-spacing="1" font-family="'IBM Plex Mono',monospace">↔ cross-références</text>
 
-        <!-- ---- PHASE 2 ---- -->
         <line x1="0" y1="252" x2="680" y2="252" stroke="#2A2A26" stroke-width="1" stroke-dasharray="4,4"/>
         <text x="0" y="268" fill="#D4A843" font-size="9" letter-spacing="2" font-family="'IBM Plex Mono',monospace">PHASE 2 — REQUÊTE (N fois)</text>
 
-        <!-- requête utilisateur -->
         <rect x="0" y="276" width="200" height="40" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="100" y="300" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">"Quelles études post-2023</text>
         <text x="100" y="312" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif"> contredisent X ?"</text>
 
-        <!-- Arrow from requête to wiki -->
         <path d="M202 296 L318 185" stroke="#6B8F71" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrgreen)"/>
 
-        <!-- Arrow wiki to réponse -->
         <path d="M492 130 L538 130" stroke="#6B8F71" stroke-width="1.5" marker-end="url(#arrgreen)"/>
 
-        <!-- Réponse -->
         <rect x="540" y="60" width="140" height="160" rx="4" fill="#131310" stroke="#6B8F71" stroke-width="1"/>
         <text x="610" y="88" text-anchor="middle" fill="#6B8F71" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">RÉPONSE</text>
         <text x="610" y="114" text-anchor="middle" fill="#C0BAA8" font-size="9" font-family="'DM Sans',sans-serif">Synthèse directe</text>
@@ -526,7 +492,6 @@
         <text x="610" y="186" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">→ archivée dans</text>
         <text x="610" y="200" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">le wiki</text>
 
-        <!-- Feedback loop -->
         <path d="M610 222 Q610 248 490 248 Q440 248 440 200 L440 130" stroke="#D4A843" stroke-width="1" stroke-dasharray="3,3" fill="none" marker-end="url(#arrgold)"/>
         <text x="520" y="262" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">se compose</text>
 
@@ -546,7 +511,6 @@
     </p>
   </div>
 
-  <!-- SECTION 4 : TABLEAU COMPARAISON -->
   <div class="section">
     <h2><span class="num">04 — Axes</span>Ce qui change vraiment</h2>
 
@@ -586,7 +550,7 @@
         </tr>
         <tr>
           <td>Contrainte principale</td>
-          <td class="old">Vitesse (< 200ms)</td>
+          <td class="old">Vitesse (&lt; 200ms)</td>
           <td class="new">Qualité de la compilation</td>
         </tr>
         <tr>
@@ -603,7 +567,6 @@
     </table>
   </div>
 
-  <!-- SECTION 5 : 4 PILLIERS -->
   <div class="section">
     <h2><span class="num">05 — Architecture</span>Les quatre piliers</h2>
 
@@ -630,39 +593,31 @@
       </div>
     </div>
 
-    <!-- DIAGRAM 3 : boucle de composition -->
     <div class="diagram-wrap">
       <div class="diagram-title">Fig. 03 — La boucle de composition : le wiki comme organisme vivant</div>
       <svg viewBox="0 0 600 200" width="100%" style="overflow:visible">
-
-        <!-- Centre -->
         <ellipse cx="300" cy="100" rx="70" ry="50" fill="#131310" stroke="#D4A843" stroke-width="1.5"/>
         <text x="300" y="95" text-anchor="middle" fill="#D4A843" font-size="11" letter-spacing="1" font-family="'IBM Plex Mono',monospace">WIKI</text>
         <text x="300" y="112" text-anchor="middle" fill="#8A8578" font-size="9" font-family="'DM Sans',sans-serif">connaissance</text>
 
-        <!-- Node: Nouvelle source -->
         <rect x="20" y="30" width="120" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="80" y="53" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Nouvelle source</text>
         <path d="M142 49 Q220 49 230 70" stroke="#D4A843" stroke-width="1.5" fill="none" marker-end="url(#ag2)"/>
         <text x="185" y="44" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">ingest</text>
 
-        <!-- Node: Requête -->
         <rect x="20" y="132" width="120" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="80" y="155" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Requête</text>
         <path d="M142 151 Q220 151 230 130" stroke="#6B8F71" stroke-width="1.5" fill="none" marker-end="url(#ag3)"/>
         <text x="185" y="148" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'IBM Plex Mono',monospace">query</text>
 
-        <!-- Node: Réponse archivée -->
         <rect x="460" y="132" width="130" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="525" y="155" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Réponse archivée</text>
         <path d="M370 130 Q400 151 458 151" stroke="#6B8F71" stroke-width="1.5" fill="none" marker-end="url(#ag3)"/>
 
-        <!-- Node: Contradiction détectée -->
         <rect x="460" y="30" width="130" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
         <text x="525" y="53" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Contradictions</text>
         <path d="M370 70 Q400 49 458 49" stroke="#D4A843" stroke-width="1.5" fill="none" marker-end="url(#ag2)"/>
 
-        <!-- Boucle retour : réponse → wiki -->
         <path d="M525 130 Q525 90 370 90" stroke="#D4A843" stroke-width="1" stroke-dasharray="4,3" fill="none" marker-end="url(#ag2)"/>
         <text x="460" y="100" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">se compose</text>
 
@@ -678,7 +633,6 @@
     </div>
   </div>
 
-  <!-- SECTION 6 -->
   <div class="section">
     <h2><span class="num">06 — Question ouverte</span>Ce que ça change pour qui construit</h2>
 
