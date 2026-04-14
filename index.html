@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Fin de l'Index — Le Nouveau Paradigme de la Recherche</title>
+<title>Essais — Mickaël Kasinski</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,7 +15,6 @@
     --accent: #D4A843;
     --accent2: #6B8F71;
     --border: #2A2A26;
-    --red: #C0392B;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,656 +27,329 @@
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     line-height: 1.8;
-    font-size: 17px;
     -webkit-font-smoothing: antialiased;
   }
 
+  /* GRAIN */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* MASTHEAD */
   .masthead {
     border-bottom: 1px solid var(--border);
     padding: 2rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 100;
   }
 
-  .masthead-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
+  .masthead-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -.01em;
   }
 
-  .masthead-date {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+  .masthead-title em {
+    font-style: italic;
     color: var(--accent);
   }
 
+  .masthead-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* HERO */
   .hero {
     max-width: 860px;
     margin: 0 auto;
-    padding: 8rem 3rem 5rem;
+    padding: 7rem 3rem 5rem;
+    border-bottom: 1px solid var(--border);
   }
 
   .hero-kicker {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 3px;
     color: var(--accent);
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 12px;
   }
 
-  .hero-kicker::after {
+  .hero-kicker::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -.025em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  /* ARTICLES LIST */
+  .articles-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 3rem 8rem;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
+    background: var(--border);
+  }
+
+  /* ARTICLE CARD */
+  .article-card {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 36px 40px;
+    margin-bottom: 20px;
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, background .2s;
+  }
+
+  .article-card:hover {
+    border-color: #3A3A34;
+    background: var(--bg3);
+  }
+
+  .article-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
     background: var(--accent);
-    opacity: 0.3;
+    opacity: 0;
+    transition: opacity .2s;
   }
 
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 2rem;
+  .article-card:hover::before {
+    opacity: 1;
   }
 
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
   }
 
-  .hero-intro {
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: #C8C4B8;
-    max-width: 640px;
-    border-left: 2px solid var(--accent);
-    padding-left: 1.5rem;
-    font-weight: 400;
-  }
-
-  .hero-byline {
-    margin-top: -0.5rem;
-    margin-bottom: 2rem;
+  .card-type {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid #3A3424;
+    border-radius: 2px;
+    padding: 3px 8px;
+  }
+
+  .card-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-muted);
   }
 
-  .content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 3rem 8rem;
-  }
-
-  .section {
-    margin-bottom: 5rem;
-  }
-
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    margin-top: 4rem;
-  }
-
-  h2 .num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    display: block;
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    margin-bottom: 1.4rem;
-    color: #D0CAB8;
-  }
-
-  strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .pullquote {
-    margin: 3rem -2rem;
-    padding: 2.5rem 3rem;
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .pullquote p {
+  .card-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.6rem;
-    font-style: italic;
-    line-height: 1.4;
-    color: var(--text);
-    margin: 0;
-  }
-
-  .pullquote .attr {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-top: 1rem;
-    display: block;
-  }
-
-  .diagram-wrap {
-    margin: 3.5rem -1rem;
-    padding: 2.5rem 2rem;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-  }
-
-  .diagram-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-
-  svg text {
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .pillars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 3rem 0;
-  }
-
-  .pillar {
-    padding: 1.8rem;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-top: 2px solid var(--accent);
-  }
-
-  .pillar-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--accent);
-    opacity: 0.4;
-    display: block;
-    line-height: 1;
-    margin-bottom: 0.8rem;
-  }
-
-  .pillar h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 0.6rem;
+    line-height: 1.2;
+    letter-spacing: -.01em;
     color: var(--text);
+    margin-bottom: 12px;
+    transition: color .2s;
   }
 
-  .pillar p {
-    font-size: 0.88rem;
-    line-height: 1.6;
-    color: var(--text-muted);
-    margin: 0;
+  .article-card:hover .card-title {
+    color: #F5F0E4;
   }
 
-  .compare {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2.5rem 0;
-    font-size: 0.9rem;
-  }
-
-  .compare thead th {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    padding: 0.8rem 1.2rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .compare thead th:last-child {
+  .card-title em {
+    font-style: italic;
     color: var(--accent);
   }
 
-  .compare td {
-    padding: 1rem 1.2rem;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-    color: #C0BAA8;
-  }
-
-  .compare td:first-child {
+  .card-lede {
+    font-size: .95rem;
     color: var(--text-muted);
-    font-size: 0.82rem;
-    font-family: 'IBM Plex Mono', monospace;
-    white-space: nowrap;
+    line-height: 1.65;
+    max-width: 620px;
+    margin-bottom: 20px;
   }
 
-  .compare td.old {
-    color: #C0BAA8;
-    text-decoration: none;
-  }
-
-  .compare td.new {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .footnote {
-    margin-top: 6rem;
-    padding-top: 2rem;
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
     border-top: 1px solid var(--border);
+  }
+
+  .card-author {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .card-arrow {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--text-muted);
-    line-height: 1.8;
+    transition: color .2s, transform .2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
+
+  .article-card:hover .card-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp .5s ease both .05s; }
+  .articles-section { animation: fadeUp .5s ease both .15s; }
 
   @media (max-width: 640px) {
     .masthead { padding: 1.5rem; }
     .hero { padding: 4rem 1.5rem 3rem; }
-    .content { padding: 0 1.5rem 5rem; }
-    .pullquote { margin: 2rem -0.5rem; padding: 1.5rem; }
-    .diagram-wrap { margin: 2rem -0.5rem; padding: 1.5rem 1rem; }
-    .pillars { grid-template-columns: 1fr; }
-    h1 { font-size: 2.6rem; }
+    .articles-section { padding: 3rem 1.5rem 5rem; }
+    .article-card { padding: 24px 20px; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
 <body>
 
+<div class="grain"></div>
+
 <header class="masthead">
-  <span class="masthead-label">Essai · Recherche & Intelligence</span>
-  <span class="masthead-date">Avril 2026</span>
+  <span class="masthead-title"><em>Essais</em></span>
+  <span class="masthead-sub">Mickaël Kasinski</span>
 </header>
 
 <section class="hero">
-  <div class="hero-kicker">Manifeste</div>
-  <h1>La Fin<br>de <em>l'Index</em></h1>
-  <p class="hero-byline">Réflexion personnelle de Mickaël Kasinski</p>
-  <p class="hero-intro">
-    Google n'a pas été conçu pour répondre à des questions. Il a été conçu pour indexer des documents dans un monde sans CPU suffisant pour faire mieux. Ce monde a disparu. L'architecture est restée.
+  <div class="hero-kicker">Publication indépendante</div>
+  <h1>Observations sur<br>l'<em>intelligence artificielle</em></h1>
+  <p class="hero-desc">
+    Analyses, réflexions et prises de position sur les transformations en cours. Pas de bruit — juste ce qui mérite d'être dit.
   </p>
 </section>
 
-<article class="content">
+<main class="articles-section">
+  <div class="section-label">Articles publiés</div>
 
-  <div class="section">
-    <h2><span class="num">01 — Héritage</span>Une contrainte déguisée en design</h2>
-
-    <p>
-      En 1998, les ingénieurs de Stanford avaient un problème bien défini : des millions de pages HTML, des serveurs limités, et des utilisateurs qui attendaient une réponse en moins d'une seconde. La solution — l'index inversé, le PageRank, les liens bleus — était géniale pour ces contraintes. Elle n'était pas conçue pour être la forme définitive de la recherche d'information.
-    </p>
-
-    <p>
-      Mais la solution a fonctionné si bien, si longtemps, qu'on a fini par la confondre avec la chose elle-même. <strong>On ne cherche pas des liens. On cherche des réponses.</strong> Les liens étaient le meilleur proxy disponible en 1998. En 2026, ce n'est plus le cas.
-    </p>
-
-    <p>
-      Quand une industrie entière construit ses alternatives en recopiant l'architecture du leader, ce n'est pas de l'innovation — c'est de la confirmation. Les moteurs de recherche "alternatifs" ont tous reproduit le même paradigme : crawler, indexer, classer, afficher. Avec parfois de meilleures intentions sur la vie privée, une meilleure neutralité politique, une meilleure neutralité commerciale. Mais le même paradigme.
-    </p>
-
-    <div class="pullquote">
-      <p>"L'index n'a jamais été le produit. C'était le meilleur outil disponible pour accéder au produit — la connaissance."</p>
+  <a href="fin-des-chatbots.html" class="article-card">
+    <div class="card-meta">
+      <span class="card-type">Analyse</span>
+      <span class="card-date">Avril 2026</span>
     </div>
-
-    <div class="diagram-wrap">
-      <div class="diagram-title">Fig. 01 — L'architecture héritée (1998–2025)</div>
-      <svg viewBox="0 0 680 180" width="100%" style="overflow:visible">
-        <rect x="10" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
-        <text x="70" y="72" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">LE WEB</text>
-        <text x="70" y="94" text-anchor="middle" fill="#5A5550" font-size="22">⊞</text>
-        <text x="70" y="118" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">N milliards</text>
-        <text x="70" y="130" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">de documents</text>
-
-        <path d="M132 90 L168 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
-        <text x="150" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">crawl</text>
-
-        <rect x="170" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
-        <text x="230" y="72" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">INDEX</text>
-        <text x="230" y="95" text-anchor="middle" fill="#5A5550" font-size="20">≡</text>
-        <text x="230" y="118" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">mots-clés</text>
-        <text x="230" y="130" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">+ PageRank</text>
-
-        <path d="M292 90 L328 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
-        <text x="310" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">match</text>
-
-        <rect x="330" y="40" width="120" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
-        <text x="390" y="69" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">REQUÊTE</text>
-        <text x="390" y="92" text-anchor="middle" fill="#5A5550" font-size="18" font-family="'IBM Plex Mono',monospace">"jaguar"</text>
-        <text x="390" y="116" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">2–5 mots</text>
-        <text x="390" y="128" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">sans contexte</text>
-
-        <path d="M452 90 L488 90" stroke="#2A2A26" stroke-width="1.5" marker-end="url(#arr1)"/>
-        <text x="470" y="82" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'IBM Plex Mono',monospace">rank</text>
-
-        <rect x="490" y="40" width="180" height="100" rx="4" fill="#1A1A17" stroke="#2A2A26" stroke-width="1"/>
-        <text x="580" y="68" text-anchor="middle" fill="#8A8578" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">RÉSULTATS</text>
-        <text x="580" y="88" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 Jaguar (animal)</text>
-        <text x="580" y="104" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 Jaguar Cars Ltd</text>
-        <text x="580" y="120" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 Jaguar Land Rover</text>
-        <text x="580" y="136" text-anchor="middle" fill="#3A5C42" font-size="9" font-family="'DM Sans',sans-serif">🔗 ...</text>
-
-        <text x="580" y="168" text-anchor="middle" fill="#8A3030" font-size="9" font-family="'IBM Plex Mono',monospace">redécouvert à chaque requête</text>
-
-        <defs>
-          <marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#2A2A26"/>
-          </marker>
-        </defs>
-      </svg>
+    <h2 class="card-title">La fin des <em>chatbots</em> — L'ère des agents qui font à ta place</h2>
+    <p class="card-lede">
+      Pendant trois ans, on a appris à parler aux IA. En 2026, on leur délègue. OpenAI, Anthropic, Perplexity : tout le monde pivote vers le même endroit. L'interface disparaît. L'action prend sa place.
+    </p>
+    <div class="card-footer">
+      <span class="card-author">Mickaël Kasinski · Sources citées</span>
+      <span class="card-arrow">Lire →</span>
     </div>
+  </a>
 
-  </div>
-
-  <div class="section">
-    <h2><span class="num">02 — Rupture</span>Ce que les LLM changent vraiment</h2>
-
-    <p>
-      Les grands modèles de langage ne sont pas une amélioration du moteur de recherche. Ils invalident ses hypothèses fondamentales. Pour la première fois, il devient possible de <strong>lire un document et d'en extraire la substance</strong> — pas de matcher des tokens, pas de scorer des fréquences. De comprendre.
-    </p>
-
-    <p>
-      Cette capacité transforme le problème de retrieval en problème de compilation. La distinction est essentielle.
-    </p>
-
-    <p>
-      <strong>Retriever</strong>, c'est aller chercher. Tu poses une question, quelque chose parcourt une collection et remonte ce qui ressemble à une réponse. La connaissance reste dans les documents. Elle n'existe que pendant la requête.
-    </p>
-
-    <p>
-      <strong>Compiler</strong>, c'est construire. Tu lis les sources une fois, tu extrais ce qui compte, tu structures les relations, tu notes les contradictions. La connaissance existe indépendamment de la requête. Elle s'accumule. Elle vieillit. Elle se corrige.
-    </p>
-
-    <div class="pullquote">
-      <p>"Le problème n'a jamais été la vitesse du retrieval. Le problème a toujours été que rien ne s'accumulait."</p>
+  <a href="fin-de-lindex.html" class="article-card">
+    <div class="card-meta">
+      <span class="card-type">Manifeste</span>
+      <span class="card-date">Avril 2026</span>
     </div>
-
-    <p>
-      Un humain expert dans un domaine n'est pas rapide parce qu'il "cherche" vite. Il est rapide parce qu'il a déjà synthétisé des années de lecture en un modèle mental cohérent. Il n'interroge pas ses livres — il pense. <strong>C'est l'état vers lequel tend naturellement un système de connaissance bien conçu.</strong>
+    <h2 class="card-title">La Fin de <em>l'Index</em> — Le Nouveau Paradigme de la Recherche</h2>
+    <p class="card-lede">
+      Google n'a pas été conçu pour répondre à des questions. Il a été conçu pour indexer des documents dans un monde sans CPU suffisant pour faire mieux. Ce monde a disparu. L'architecture est restée.
     </p>
-  </div>
-
-  <div class="section">
-    <h2><span class="num">03 — Nouveau paradigme</span>La connaissance compilée</h2>
-
-    <p>
-      Le nouveau paradigme ne part pas de la requête. Il part de la source. Les documents bruts ne sont plus le produit final — ils sont la matière première d'une couche de connaissance structurée, maintenue, et vivante.
-    </p>
-
-    <div class="diagram-wrap">
-      <div class="diagram-title">Fig. 02 — Le nouveau paradigme : compilation avant requête</div>
-      <svg viewBox="0 0 680 320" width="100%" style="overflow:visible">
-        <text x="0" y="16" fill="#D4A843" font-size="9" letter-spacing="2" font-family="'IBM Plex Mono',monospace">PHASE 1 — COMPILATION (une fois)</text>
-
-        <rect x="0" y="28" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="45" y="50" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Articles</text>
-
-        <rect x="0" y="72" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="45" y="94" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Papiers</text>
-
-        <rect x="0" y="116" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="45" y="138" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Données</text>
-
-        <rect x="0" y="160" width="90" height="36" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="45" y="182" text-anchor="middle" fill="#8A8578" font-size="10" font-family="'DM Sans',sans-serif">Transcripts</text>
-
-        <path d="M92 46 L148 100" stroke="#2A2A26" stroke-width="1"/>
-        <path d="M92 90 L148 108" stroke="#2A2A26" stroke-width="1"/>
-        <path d="M92 134 L148 116" stroke="#2A2A26" stroke-width="1"/>
-        <path d="M92 178 L148 124" stroke="#2A2A26" stroke-width="1"/>
-
-        <rect x="150" y="56" width="120" height="110" rx="4" fill="#1A1A17" stroke="#D4A843" stroke-width="1"/>
-        <text x="210" y="88" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">LLM</text>
-        <text x="210" y="106" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">COMPILER</text>
-        <text x="210" y="130" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">lit · extrait</text>
-        <text x="210" y="145" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">relie · note</text>
-        <text x="210" y="160" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">contradictions</text>
-
-        <path d="M272 111 L318 111" stroke="#D4A843" stroke-width="1.5" marker-end="url(#arrgold)"/>
-
-        <rect x="320" y="28" width="170" height="200" rx="4" fill="#131310" stroke="#D4A843" stroke-width="1"/>
-        <text x="405" y="56" text-anchor="middle" fill="#D4A843" font-size="10" letter-spacing="2" font-family="'IBM Plex Mono',monospace">WIKI COMPILÉ</text>
-
-        <rect x="335" y="68" width="140" height="22" rx="2" fill="#1E1E1A"/>
-        <text x="405" y="83" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'DM Sans',sans-serif">📄 entités.md</text>
-
-        <rect x="335" y="96" width="140" height="22" rx="2" fill="#1E1E1A"/>
-        <text x="405" y="111" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'DM Sans',sans-serif">📄 concepts.md</text>
-
-        <rect x="335" y="124" width="140" height="22" rx="2" fill="#1E1E1A"/>
-        <text x="405" y="139" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'DM Sans',sans-serif">📄 synthèse.md</text>
-
-        <rect x="335" y="152" width="140" height="22" rx="2" fill="#1E1E1A"/>
-        <text x="405" y="167" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'DM Sans',sans-serif">📄 contradictions.md</text>
-
-        <rect x="335" y="180" width="140" height="22" rx="2" fill="#1E1E1A"/>
-        <text x="405" y="195" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'DM Sans',sans-serif">📄 index.md</text>
-
-        <text x="405" y="226" text-anchor="middle" fill="#3A5C42" font-size="9" letter-spacing="1" font-family="'IBM Plex Mono',monospace">↔ cross-références</text>
-
-        <line x1="0" y1="252" x2="680" y2="252" stroke="#2A2A26" stroke-width="1" stroke-dasharray="4,4"/>
-        <text x="0" y="268" fill="#D4A843" font-size="9" letter-spacing="2" font-family="'IBM Plex Mono',monospace">PHASE 2 — REQUÊTE (N fois)</text>
-
-        <rect x="0" y="276" width="200" height="40" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="100" y="300" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">"Quelles études post-2023</text>
-        <text x="100" y="312" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif"> contredisent X ?"</text>
-
-        <path d="M202 296 L318 185" stroke="#6B8F71" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrgreen)"/>
-
-        <path d="M492 130 L538 130" stroke="#6B8F71" stroke-width="1.5" marker-end="url(#arrgreen)"/>
-
-        <rect x="540" y="60" width="140" height="160" rx="4" fill="#131310" stroke="#6B8F71" stroke-width="1"/>
-        <text x="610" y="88" text-anchor="middle" fill="#6B8F71" font-size="10" letter-spacing="1" font-family="'IBM Plex Mono',monospace">RÉPONSE</text>
-        <text x="610" y="114" text-anchor="middle" fill="#C0BAA8" font-size="9" font-family="'DM Sans',sans-serif">Synthèse directe</text>
-        <text x="610" y="132" text-anchor="middle" fill="#C0BAA8" font-size="9" font-family="'DM Sans',sans-serif">+ sources citées</text>
-        <text x="610" y="150" text-anchor="middle" fill="#C0BAA8" font-size="9" font-family="'DM Sans',sans-serif">+ contradictions</text>
-        <text x="610" y="168" text-anchor="middle" fill="#C0BAA8" font-size="9" font-family="'DM Sans',sans-serif">signalées</text>
-        <text x="610" y="186" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">→ archivée dans</text>
-        <text x="610" y="200" text-anchor="middle" fill="#5A5550" font-size="9" font-family="'DM Sans',sans-serif">le wiki</text>
-
-        <path d="M610 222 Q610 248 490 248 Q440 248 440 200 L440 130" stroke="#D4A843" stroke-width="1" stroke-dasharray="3,3" fill="none" marker-end="url(#arrgold)"/>
-        <text x="520" y="262" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">se compose</text>
-
-        <defs>
-          <marker id="arrgold" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#D4A843"/>
-          </marker>
-          <marker id="arrgreen" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#6B8F71"/>
-          </marker>
-        </defs>
-      </svg>
+    <div class="card-footer">
+      <span class="card-author">Mickaël Kasinski · Réflexion personnelle</span>
+      <span class="card-arrow">Lire →</span>
     </div>
+  </a>
 
-    <p>
-      La boucle est cruciale : <strong>les réponses alimentent elles-mêmes le wiki</strong>. Une analyse, une comparaison, une connexion inédite découverte lors d'une requête — tout ça devient une nouvelle page. Le système s'enrichit de ses propres usages.
-    </p>
-  </div>
+</main>
 
-  <div class="section">
-    <h2><span class="num">04 — Axes</span>Ce qui change vraiment</h2>
-
-    <table class="compare">
-      <thead>
-        <tr>
-          <th>Axe</th>
-          <th>Paradigme 1998</th>
-          <th>Nouveau paradigme</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Unité de valeur</td>
-          <td class="old">Le document trouvé</td>
-          <td class="new">La connaissance compilée</td>
-        </tr>
-        <tr>
-          <td>Temporalité</td>
-          <td class="old">Redécouvert à chaque requête</td>
-          <td class="new">Compilé une fois, composé en continu</td>
-        </tr>
-        <tr>
-          <td>Format de requête</td>
-          <td class="old">2–5 mots-clés sans contexte</td>
-          <td class="new">Question riche, contexte personnel</td>
-        </tr>
-        <tr>
-          <td>Format de réponse</td>
-          <td class="old">10 liens bleus</td>
-          <td class="new">Synthèse sourcée, archivable</td>
-        </tr>
-        <tr>
-          <td>Personnalisation</td>
-          <td class="old">Comportementale (clics, historique)</td>
-          <td class="new">Épistémique (ce que tu sais déjà)</td>
-        </tr>
-        <tr>
-          <td>Contrainte principale</td>
-          <td class="old">Vitesse (&lt; 200ms)</td>
-          <td class="new">Qualité de la compilation</td>
-        </tr>
-        <tr>
-          <td>Périmètre</td>
-          <td class="old">Universel, indifférencié</td>
-          <td class="new">Domaine-spécifique, profond</td>
-        </tr>
-        <tr>
-          <td>Propriété du savoir</td>
-          <td class="old">Dans les documents tiers</td>
-          <td class="new">Dans ton wiki, persistent</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section">
-    <h2><span class="num">05 — Architecture</span>Les quatre piliers</h2>
-
-    <div class="pillars">
-      <div class="pillar">
-        <span class="pillar-num">01</span>
-        <h3>Sources immuables</h3>
-        <p>Les documents bruts ne sont jamais modifiés. Ils sont la matière première — vérifiables, traçables, horodatés. La confiance dans la compilation dépend de l'intégrité des sources.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">02</span>
-        <h3>Couche compilée</h3>
-        <p>Le wiki structuré que le LLM maintient. Entités, concepts, synthèses, contradictions. Cette couche appartient à l'utilisateur. Elle grandit avec chaque nouvelle source ingérée.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">03</span>
-        <h3>Schema évolutif</h3>
-        <p>Le contrat entre l'humain et le compilateur. Il définit les conventions, les workflows, ce qui mérite une page propre. Co-évolue avec les besoins du domaine exploré.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">04</span>
-        <h3>Boucle de composition</h3>
-        <p>Chaque réponse peut devenir une nouvelle entrée. L'usage enrichit le wiki. Le système apprend non pas du comportement de l'utilisateur, mais de sa pensée.</p>
-      </div>
-    </div>
-
-    <div class="diagram-wrap">
-      <div class="diagram-title">Fig. 03 — La boucle de composition : le wiki comme organisme vivant</div>
-      <svg viewBox="0 0 600 200" width="100%" style="overflow:visible">
-        <ellipse cx="300" cy="100" rx="70" ry="50" fill="#131310" stroke="#D4A843" stroke-width="1.5"/>
-        <text x="300" y="95" text-anchor="middle" fill="#D4A843" font-size="11" letter-spacing="1" font-family="'IBM Plex Mono',monospace">WIKI</text>
-        <text x="300" y="112" text-anchor="middle" fill="#8A8578" font-size="9" font-family="'DM Sans',sans-serif">connaissance</text>
-
-        <rect x="20" y="30" width="120" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="80" y="53" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Nouvelle source</text>
-        <path d="M142 49 Q220 49 230 70" stroke="#D4A843" stroke-width="1.5" fill="none" marker-end="url(#ag2)"/>
-        <text x="185" y="44" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">ingest</text>
-
-        <rect x="20" y="132" width="120" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="80" y="155" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Requête</text>
-        <path d="M142 151 Q220 151 230 130" stroke="#6B8F71" stroke-width="1.5" fill="none" marker-end="url(#ag3)"/>
-        <text x="185" y="148" text-anchor="middle" fill="#6B8F71" font-size="9" font-family="'IBM Plex Mono',monospace">query</text>
-
-        <rect x="460" y="132" width="130" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="525" y="155" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Réponse archivée</text>
-        <path d="M370 130 Q400 151 458 151" stroke="#6B8F71" stroke-width="1.5" fill="none" marker-end="url(#ag3)"/>
-
-        <rect x="460" y="30" width="130" height="38" rx="3" fill="#181816" stroke="#2A2A26"/>
-        <text x="525" y="53" text-anchor="middle" fill="#C0BAA8" font-size="10" font-family="'DM Sans',sans-serif">Contradictions</text>
-        <path d="M370 70 Q400 49 458 49" stroke="#D4A843" stroke-width="1.5" fill="none" marker-end="url(#ag2)"/>
-
-        <path d="M525 130 Q525 90 370 90" stroke="#D4A843" stroke-width="1" stroke-dasharray="4,3" fill="none" marker-end="url(#ag2)"/>
-        <text x="460" y="100" text-anchor="middle" fill="#D4A843" font-size="9" font-family="'IBM Plex Mono',monospace">se compose</text>
-
-        <defs>
-          <marker id="ag2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#D4A843"/>
-          </marker>
-          <marker id="ag3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#6B8F71"/>
-          </marker>
-        </defs>
-      </svg>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2><span class="num">06 — Question ouverte</span>Ce que ça change pour qui construit</h2>
-
-    <p>
-      Si la valeur se déplace de l'index vers la compilation, alors les avantages compétitifs changent entièrement. Avoir crawlé le plus de pages n'est plus l'avantage déterminant. <strong>Être le meilleur compilateur dans un domaine précis en devient un.</strong>
-    </p>
-
-    <p>
-      Un acteur qui choisit de ne pas concurrencer sur la largeur de l'index — mais sur la profondeur de la compilation dans des domaines ciblés — peut battre Google sur son propre terrain de valeur perçue. Pas en faisant la même chose en mieux. En faisant autre chose.
-    </p>
-
-    <p>
-      La fragmentation par domaine est inévitable. La médecine, le droit, la recherche scientifique, l'intelligence économique — chacun mérite un compilateur spécialisé, avec des sources curées, un schema adapté, et une boucle de composition calibrée pour les experts de ce domaine.
-    </p>
-
-    <p>
-      La vitesse n'est plus l'avantage. <strong>La profondeur l'est.</strong> Le temps de réponse de Google est mesuré en millisecondes. La valeur du nouveau paradigme est mesurée en mois de connaissance accumulée.
-    </p>
-
-    <div class="pullquote">
-      <p>"La question n'est pas 'comment chercher plus vite'. C'est 'pourquoi chercher du tout quand on peut avoir déjà compris' ?"</p>
-    </div>
-
-    <p>
-      Vannevar Bush avait imaginé ça en 1945 dans son essai <em>As We May Think</em> — un système personnel de connaissance à liens associatifs qu'il appelait Memex. Il avait résolu le problème conceptuel. Il ne pouvait pas résoudre le problème de maintenance : qui allait garder tout ça à jour ? La réponse, 80 ans plus tard, est évidente.
-    </p>
-  </div>
-
-  <div class="footnote">
-    <p>— Réflexion personnelle de Mickaël Kasinski, avril 2026.</p>
-    <p>Les schémas décrivent une architecture générique. Aucune implémentation spécifique n'est citée ou endossée.</p>
-  </div>
-
-</article>
+<footer>
+  <span>Essais · Mickaël Kasinski</span>
+  <span>Avril 2026</span>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La fin des chatbots — L'ère des agents IA qui font à ta place</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111114;
+    --border: #1e1e24;
+    --accent: #c8a96e;
+    --accent2: #7ec8c8;
+    --accent3: #c87e9a;
+    --text: #e2e2e8;
+    --muted: #6a6a78;
+    --faint: #1a1a20;
+    --red: #c87e7e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    opacity: .04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  .nav {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-back {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color .15s;
+  }
+
+  .nav-back:hover { color: var(--accent); }
+
+  .nav-back::before {
+    content: '←';
+    font-size: 12px;
+  }
+
+  .nav-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--border);
+  }
+
+  /* HEADER */
+  header {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 32px 64px;
+    position: relative;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .kicker::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    margin-bottom: 24px;
+    color: #f0f0f4;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .lede {
+    font-size: 1.2rem;
+    line-height: 1.65;
+    color: #b0b0bc;
+    font-weight: 300;
+    font-style: italic;
+    max-width: 600px;
+    margin-bottom: 36px;
+  }
+
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .byline-sep { color: var(--border); }
+
+  /* DIVIDER */
+  .rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* MAIN ARTICLE */
+  article {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px 120px;
+  }
+
+  /* DROP CAP */
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.8em;
+    font-weight: 900;
+    float: left;
+    line-height: .82;
+    margin-right: .08em;
+    margin-top: .05em;
+    color: var(--accent);
+  }
+
+  /* SECTION HEADING */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: #f0f0f4;
+    margin-top: 72px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  h2 .num {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 2px;
+    vertical-align: super;
+    margin-right: 8px;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    color: #d0d0dc;
+    margin-top: 40px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 1.05rem;
+    margin-bottom: 1.4em;
+    color: #c8c8d4;
+  }
+
+  p strong {
+    color: #e8e8f0;
+    font-weight: 600;
+  }
+
+  /* PULL QUOTE */
+  .pull {
+    position: relative;
+    border-left: 3px solid var(--accent);
+    margin: 48px 0;
+    padding: 4px 0 4px 28px;
+  }
+
+  .pull blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-style: italic;
+    font-weight: 400;
+    color: #e0d8c8;
+    line-height: 1.45;
+  }
+
+  .pull cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+
+  /* ACTOR CARDS */
+  .actors {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 48px 0;
+  }
+
+  @media (max-width: 640px) {
+    .actors { grid-template-columns: 1fr; }
+  }
+
+  .actor-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .actor-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .actor-card.openai::before { background: var(--accent2); }
+  .actor-card.anthropic::before { background: var(--accent); }
+  .actor-card.perplexity::before { background: var(--accent3); }
+
+  .actor-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .actor-product {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f0f0f4;
+    margin-bottom: 10px;
+  }
+
+  .actor-card.openai .actor-product { color: var(--accent2); }
+  .actor-card.anthropic .actor-product { color: var(--accent); }
+  .actor-card.perplexity .actor-product { color: var(--accent3); }
+
+  .actor-desc {
+    font-size: .875rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .actor-price {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 3px 8px;
+  }
+
+  /* STAT CALLOUT */
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 40px 0;
+  }
+
+  @media (max-width: 480px) {
+    .stat-row { grid-template-columns: 1fr; }
+  }
+
+  .stat-box {
+    background: var(--faint);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* COMPARISON TABLE */
+  .compare {
+    margin: 48px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .compare-head {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    gap: 16px;
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    padding: 14px 20px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    font-size: .875rem;
+  }
+
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row:nth-child(odd) { background: var(--faint); }
+
+  .compare-row .label {
+    color: #a0a0b0;
+    font-size: .8rem;
+  }
+
+  .compare-row .era-old {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .compare-row .era-new {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin: 40px 0;
+    padding-left: 20px;
+    border-left: 1px solid var(--border);
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 28px 24px;
+  }
+
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-dot {
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 2px solid var(--bg);
+  }
+
+  .tl-item.highlight .tl-dot { background: var(--accent); }
+
+  .tl-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-size: .95rem;
+    font-weight: 600;
+    color: #e0e0ec;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: .85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* SECTION BREAK */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 60px 0 20px;
+    color: var(--border);
+  }
+
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-break span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* CALLOUT BOX */
+  .callout {
+    background: var(--faint);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin: 36px 0;
+  }
+
+  .callout-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-size: .9rem;
+    margin-bottom: .6em;
+    color: #a8a8b8;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* FOOTNOTES */
+  .footnotes {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footnotes-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .fn {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: .8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .fn-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .fn a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 32px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  footer a:hover { color: var(--accent); }
+
+  /* ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header, article > * {
+    animation: fadeUp .6s ease both;
+  }
+
+  header { animation-delay: .05s; }
+  article > *:nth-child(1) { animation-delay: .1s; }
+  article > *:nth-child(2) { animation-delay: .15s; }
+  article > *:nth-child(3) { animation-delay: .2s; }
+
+  /* HIGHLIGHT */
+  mark {
+    background: transparent;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  sup {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    color: var(--accent);
+    vertical-align: super;
+    margin-left: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-back">Tous les articles</a>
+  <span class="nav-label">Essais · Mickaël Kasinski</span>
+</nav>
+
+<header>
+  <div class="kicker">Analyse · Avril 2026</div>
+  <h1>La fin des <em>chatbots</em> — L'ère des agents qui font à ta place</h1>
+  <p class="lede">
+    Pendant trois ans, on a appris à parler aux IA. En 2026, on leur délègue. OpenAI, Anthropic, Perplexity : tout le monde pivote vers le même endroit. L'interface disparaît. L'action prend sa place.
+  </p>
+  <div class="byline">
+    <span>Mickaël Kasinski</span>
+    <span class="byline-sep">·</span>
+    <span>Analyse éditoriale</span>
+    <span class="byline-sep">·</span>
+    <span>Avril 2026</span>
+    <span class="byline-sep">·</span>
+    <span>Sources citées</span>
+  </div>
+</header>
+
+<hr class="rule">
+
+<article>
+
+  <p class="drop-cap">
+    Il y a un moment précis où le paradigme bascule. Pour l'internet, c'était le passage du répertoire de liens à la page de résultats. Pour les moteurs de recherche, c'était le passage de la page web à la réponse directe. Pour l'IA, ce moment, <strong>c'est maintenant</strong> — et il ressemble à ceci : tu confies une tâche à une machine, tu vas chercher un café, et quand tu reviens, c'est fait.
+  </p>
+
+  <p>
+    Depuis fin 2022, on a vécu dans l'ère du chatbot. Formidable outil de dialogue, extraordinaire générateur de texte, mais fondamentalement <strong>passif</strong> : l'IA attendait tes questions, produisait des réponses, et s'arrêtait là. Tu devais encore copier-coller, ouvrir des apps, cliquer, exécuter. Le chatbot était un consultant brillant. Pas un exécutant.
+  </p>
+
+  <p>
+    En 2026, ce modèle est révolu. Ce qui émerge à sa place — chez OpenAI, Anthropic, Perplexity — porte un nom : <mark>l'agent IA</mark>. Pas un assistant qui répond. Un système qui agit, délègue, persiste, et revient avec le travail terminé.
+  </p>
+
+  <div class="section-break"><span>I — La rupture</span></div>
+
+  <h2><span class="num">01</span> Ce que "chatbot" voulait vraiment dire</h2>
+
+  <p>
+    ChatGPT, lancé en novembre 2022, a été le premier produit grand public à rendre la conversation avec une IA fluide et utile. En quelques mois, des centaines de millions de personnes ont appris une nouvelle compétence : <strong>prompter</strong>. Formuler une requête, affiner la réponse, itérer. Un dialogue, pas une délégation.
+  </p>
+
+  <p>
+    Ce modèle avait une limite structurelle invisible : <strong>l'IA s'arrêtait à la réponse</strong>. Elle pouvait rédiger un email, mais pas l'envoyer. Analyser un fichier Excel, mais pas le modifier. Planifier un projet, mais pas créer les dossiers, les documents, les rappels. Entre le texte généré et l'action accomplie, il restait un gouffre — et ce gouffre, c'était toi qui devais le traverser.
+  </p>
+
+  <div class="pull">
+    <blockquote>
+      "Le chatbot était un consultant brillant enfermé dans une boîte de dialogue. L'agent, lui, a les clés du bureau."
+    </blockquote>
+  </div>
+
+  <p>
+    C'est là que se situe la rupture fondamentale de 2026. Non pas dans la qualité des modèles — bien qu'ils soient meilleurs — mais dans <strong>ce qu'on leur demande de faire</strong>. L'ère du chatbot était l'ère de la conversation. L'ère de l'agent est l'ère de la <em>délégation</em>.
+  </p>
+
+  <div class="section-break"><span>II — Le pivot</span></div>
+
+  <h2><span class="num">02</span> Comment les grands acteurs ont pivoté</h2>
+
+  <p>
+    Ce pivot ne s'est pas produit graduellement. Il s'est concentré sur une fenêtre de moins de six mois — entre janvier et mars 2026 — où chacun des grands acteurs a annoncé sa vision du monde post-chatbot.
+  </p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Janvier 2025</div>
+      <div class="tl-title">OpenAI lance Operator</div>
+      <div class="tl-desc">Premier agent grand public capable de naviguer le web, remplir des formulaires, réserver des voyages — sans que l'utilisateur touche quoi que ce soit.<sup>16</sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Juillet 2025</div>
+      <div class="tl-title">ChatGPT Agent remplace Operator</div>
+      <div class="tl-desc">OpenAI fond ses capacités agentiques dans ChatGPT directement. Le mode "agent" devient un simple toggle dans l'interface habituelle.<sup>18</sup></div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-dot"></div>
+      <div class="tl-date">12 Janvier 2026</div>
+      <div class="tl-title">Anthropic lance Claude Cowork</div>
+      <div class="tl-desc">Un agent desktop qui travaille directement dans les fichiers de l'utilisateur sur Mac, puis Windows. Sans terminal. Sans compétences techniques requises.<sup>8</sup></div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-dot"></div>
+      <div class="tl-date">25 Février 2026</div>
+      <div class="tl-title">Perplexity Computer</div>
+      <div class="tl-desc">Un agent cloud qui orchestre 20 modèles en parallèle pour accomplir des tâches complexes — même si ton ordinateur est éteint.<sup>7</sup></div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-dot"></div>
+      <div class="tl-date">11 Mars 2026</div>
+      <div class="tl-title">Perplexity Personal Computer</div>
+      <div class="tl-desc">Extension locale sur Mac mini : l'agent accède aux fichiers, apps et sessions de ta machine, 24h/24. Contrôle depuis n'importe quel appareil.<sup>3</sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">9 Avril 2026</div>
+      <div class="tl-title">Cowork quitte la preview — enterprise ready</div>
+      <div class="tl-desc">Anthropic retire le label "research preview" de Cowork et lance des fonctionnalités enterprise : contrôles d'accès, analytics, Zoom MCP connector.<sup>15</sup></div>
+    </div>
+  </div>
+
+  <p>
+    Ce qui frappe dans cette chronologie, c'est la <strong>convergence</strong>. Trois acteurs radicalement différents — un lab de recherche (Anthropic), une start-up de search (Perplexity), un géant produit (OpenAI) — arrivent tous au même endroit en quelques mois. Ce n'est pas une mode. C'est un signal de marché.
+  </p>
+
+  <div class="section-break"><span>III — Les acteurs</span></div>
+
+  <h2><span class="num">03</span> Trois visions, un seul paradigme</h2>
+
+  <p>
+    Tous disent la même chose : <em>"Délègue-moi la tâche, pas la requête."</em> Mais leurs architectures révèlent des paris très différents sur ce qu'est vraiment l'interface entre l'humain et le travail délégué.
+  </p>
+
+  <div class="actors">
+    <div class="actor-card openai">
+      <div class="actor-label">OpenAI</div>
+      <div class="actor-product">ChatGPT Agent</div>
+      <div class="actor-desc">Intégré directement dans ChatGPT. Un ordinateur virtuel sur les serveurs OpenAI — l'agent agit en arrière-plan, tu reçois une notification quand c'est terminé. Approche "headless" sans accès à tes fichiers locaux.</div>
+      <span class="actor-price">Pro · $200/mois</span>
+    </div>
+    <div class="actor-card anthropic">
+      <div class="actor-label">Anthropic</div>
+      <div class="actor-product">Claude Cowork</div>
+      <div class="actor-desc">L'agent tourne sur ton ordinateur (Mac ou Windows). Il lit tes fichiers locaux, modifie des documents, ouvre des apps, exécute des workflows complets. L'IA travaille dans ton environnement, pas dans le sien.</div>
+      <span class="actor-price">Pro · $20/mois</span>
+    </div>
+    <div class="actor-card perplexity">
+      <div class="actor-label">Perplexity</div>
+      <div class="actor-product">Computer + Personal</div>
+      <div class="actor-desc">Double architecture : un cloud agent (Computer) qui orchestre 20 modèles même PC éteint, et un agent local (Personal Computer) sur Mac mini dédié avec accès aux fichiers. 24/7, depuis n'importe quel device.</div>
+      <span class="actor-price">Max · $200/mois</span>
+    </div>
+  </div>
+
+  <p>
+    La distinction clé n'est pas le prix ni la marque — c'est <strong>où l'agent opère</strong>. Sur ta machine ou dans le cloud ? Avec tes fichiers ou avec des données web ? En arrière-plan silencieux ou avec confirmation à chaque action ? Ces choix architecturaux reflètent des philosophies différentes du contrôle, de la vie privée, et de la confiance.
+  </p>
+
+  <div class="callout">
+    <div class="callout-head">↗ La différence qui compte</div>
+    <p>Un agent cloud (Perplexity Computer, ChatGPT Agent) peut tourner 24/7 même ordinateur éteint — idéal pour les tâches longues, les recherches intensives, les synthèses multi-sources.</p>
+    <p>Un agent local (Claude Cowork, Perplexity Personal Computer) a accès à tes fichiers privés sans qu'ils ne quittent ta machine — idéal pour la gestion documentaire, les workflows créatifs, le travail de fond quotidien.</p>
+    <p>Beaucoup d'utilisateurs avancés utilisent les deux en tandem.</p>
+  </div>
+
+  <div class="section-break"><span>IV — La bascule</span></div>
+
+  <h2><span class="num">04</span> De "parler à" à "déléguer à"</h2>
+
+  <p>
+    La vraie rupture n'est pas technologique. Elle est <strong>cognitive</strong>. Interagir avec un chatbot demande une compétence : savoir formuler. Interagir avec un agent demande une compétence différente — et plus naturelle : <em>savoir déléguer</em>.
+  </p>
+
+  <p>
+    Tu ne dis plus <em>"rédige-moi une synthèse des résultats Q1 en bullet points, ton neutre, format markdown"</em>. Tu dis <em>"prépare le rapport mensuel pour la direction"</em>. Et l'agent comprend ce que ça implique : chercher les fichiers, les lire, les comparer, rédiger, formater, peut-être même l'envoyer.
+  </p>
+
+  <div class="compare">
+    <div class="compare-head">
+      <span>Dimension</span>
+      <span>Ère chatbot</span>
+      <span>Ère agent</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Interface</span>
+      <span class="era-old">Dialogue</span>
+      <span class="era-new">Délégation</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Unité de base</span>
+      <span class="era-old">La réponse</span>
+      <span class="era-new">La tâche accomplie</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Durée d'interaction</span>
+      <span class="era-old">Seconds</span>
+      <span class="era-new">Minutes à heures</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Accès</span>
+      <span class="era-old">Contexte du prompt</span>
+      <span class="era-new">Fichiers, apps, web</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Résultat</span>
+      <span class="era-old">Texte à copier</span>
+      <span class="era-new">Action déjà exécutée</span>
+    </div>
+    <div class="compare-row">
+      <span class="label">Compétence requise</span>
+      <span class="era-old">Prompter</span>
+      <span class="era-new">Superviser</span>
+    </div>
+  </div>
+
+  <p>
+    Ce changement a une implication profonde pour les utilisateurs. <strong>Le bottleneck n'est plus l'IA</strong> — c'est toi. Ta capacité à définir clairement un objectif, à fixer les bonnes contraintes, à vérifier le résultat. Les nouvelles compétences qui ont de la valeur ne sont plus "savoir prompter" mais "savoir déléguer et superviser".
+  </p>
+
+  <div class="pull">
+    <blockquote>
+      "Perplexity Computer peut comprendre un objectif, se déplacer entre des outils, et continuer à travailler après que tu t'en ailles."
+    </blockquote>
+    <cite>— Perplexity AI, blog officiel, Mars 2026<sup>2</sup></cite>
+  </div>
+
+  <div class="section-break"><span>V — Les chiffres</span></div>
+
+  <h2><span class="num">05</span> Un marché qui valide le pivot</h2>
+
+  <p>
+    Les annonces produits seraient anecdotiques sans les signaux de marché pour les confirmer. Mais en 2026, ces signaux sont sans ambiguïté.
+  </p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num">+50%</div>
+      <div class="stat-label">Croissance MRR de Perplexity en un mois après le lancement de Computer<sup>1</sup></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">65%</div>
+      <div class="stat-label">Des entreprises interrogées utilisent déjà des agents IA en production (CrewAI, Fév. 2026)<sup>4</sup></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">$139Md</div>
+      <div class="stat-label">Valeur projetée du marché agentic AI d'ici 2034 (Fortune Business Insights)<sup>4</sup></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Des entreprises sondées prévoient d'étendre leur usage d'agents IA en 2026<sup>4</sup></div>
+    </div>
+  </div>
+
+  <p>
+    Le cas Perplexity est particulièrement révélateur. <strong>L'ARR de la société a bondi de 50% en un seul mois</strong> après le lancement de Computer en février 2026, atteignant $450M. Une start-up qui avait construit son identité sur la recherche AI a vu ses revenus exploser précisément quand elle a cessé d'être un moteur de recherche pour devenir un agent d'exécution.<sup>1</sup>
+  </p>
+
+  <p>
+    Chez Anthropic, le signal est venu avant le produit. L'équipe a observé que des utilisateurs de Claude Code — un outil technique pour développeurs — l'utilisaient pour des tâches radicalement non-techniques : organiser des photos de mariage, planifier des vacances, annuler des abonnements. Ce n'est pas un bug. C'est un signal de comportement qui précède toujours l'innovation produit.<sup>8</sup>
+  </p>
+
+  <div class="section-break"><span>VI — Les implications</span></div>
+
+  <h2><span class="num">06</span> Ce que ça change vraiment</h2>
+
+  <h3>Pour les knowledge workers</h3>
+  <p>
+    La promesse immédiate est simple : <strong>externaliser le travail de bas niveau</strong>. Organiser des fichiers, préparer des résumés, remplir des formulaires, consolider des tableaux. Les agents ne remplacent pas la réflexion stratégique — ils suppriment la friction entre l'intention et l'exécution.
+  </p>
+
+  <p>
+    Mais la promesse de moyen terme est plus radicale. Si un agent peut comprendre ton environnement de travail — tes dossiers, ton historique, tes habitudes — et opérer de façon persistante en arrière-plan, la nature même du "travail de bureau" se transforme. Les tâches répétitives disparaissent. Ce qui reste, c'est le jugement, la créativité, et la supervision.
+  </p>
+
+  <h3>Pour les non-techniciens</h3>
+  <p>
+    L'enjeu historique de Claude Cowork et de ses concurrents, c'est précisément cela : <strong>mettre la puissance des agents IA entre les mains des non-développeurs</strong>. Pendant deux ans, les agents IA ont été l'apanage de ceux qui savaient coder — parce qu'ils nécessitaient des APIs, des orchestrations, des environnements. Avec une interface desktop, le marketing manager, l'avocat, le comptable peuvent déléguer à une IA avec la même fluidité qu'un ingénieur senior.
+  </p>
+
+  <h3>Pour la question du contrôle</h3>
+  <p>
+    La vraie question que soulève l'ère agentique n'est pas "est-ce que ça marche ?" mais <strong>"est-ce que je peux lui faire confiance ?"</strong>. Laisser une IA lire tes fichiers, modifier des documents, envoyer des emails en ton nom — c'est une délégation d'un autre ordre que celle d'un chatbot.
+  </p>
+
+  <p>
+    Perplexity propose un kill switch et une trace de chaque action. Anthropic demande confirmation avant les actions significatives et introduit des contrôles d'accès granulaires par dossier. Les chercheurs en sécurité ont d'ores et déjà démontré des attaques d'injection de prompt contre Cowork capables de voler des fichiers — Anthropic a reconnu le problème.<sup>11</sup> Le secteur construit encore les garde-fous en même temps qu'il déploie les capacités. Ce n'est pas nouveau dans la tech. Mais l'enjeu est plus élevé quand l'agent a les clés de ton disque dur.
+  </p>
+
+  <div class="section-break"><span>Conclusion</span></div>
+
+  <h2><span class="num">07</span> L'interface disparaît</h2>
+
+  <p>
+    Il y a quelque chose de contre-intuitif dans ce pivot. L'ère des chatbots avait créé une nouvelle catégorie d'interfaces : la conversation. Maintenant, les acteurs les plus avancés travaillent à <strong>éliminer l'interface elle-même</strong>. Tu décris un objectif. L'agent l'accomplit. Tu vérifies.
+  </p>
+
+  <p>
+    C'est la logique de fond de tous ces produits : Perplexity Computer qui "comprend un objectif, se déplace entre des outils, et continue à travailler après que tu t'en ailles". Cowork qui "complète des tâches non-techniques comme les développeurs utilisent Claude Code". ChatGPT Agent qui s'occupe de tout dans un ordinateur virtuel pendant que tu dors.
+  </p>
+
+  <p>
+    La question n'est plus <em>"À qui vais-je parler aujourd'hui pour résoudre ce problème ?"</em>. C'est <em>"Qu'est-ce que je vais déléguer ce matin ?"</em>. Et demain, peut-être même cette question-là, l'agent la posera à ta place.
+  </p>
+
+  <div class="pull">
+    <blockquote>
+      "Early users in 2026 are calling it 'the first AI that actually does the work instead of just talking about it.'"
+    </blockquote>
+    <cite>— Utilisateurs Claude Cowork, AI.cc, Mars 2026<sup>14</sup></cite>
+  </div>
+
+  <p>
+    Nous sommes en avril 2026. Le basculement a eu lieu. Il n'a pas été annoncé par une conférence ni célébré par un keynote. Il s'est produit silencieusement, par accumulation — une fonctionnalité ici, un lancement là, un chiffre d'ARR qui double en un mois. Et maintenant, pour des centaines de milliers d'early adopters, travailler avec une IA ne signifie plus <em>lui parler</em>. Ça signifie <em>lui confier</em>.
+  </p>
+
+  <div class="footnotes">
+    <div class="footnotes-head">Sources</div>
+    <div class="fn"><span class="fn-num">1</span><span>The Rundown AI — "Perplexity's agent pivot is on the money", 10 avr. 2026. ARR Perplexity $450M après lancement Computer, croissance +50% en un mois. <a href="https://www.therundown.ai/p/perplexity-agent-pivot-is-on-the-money">therundown.ai</a></span></div>
+    <div class="fn"><span class="fn-num">2</span><span>Perplexity AI Blog — "Everything is Computer", 11 mars 2026. Description officielle du produit Computer et lancement de Personal Computer. <a href="https://www.perplexity.ai/hub/blog/everything-is-computer">perplexity.ai</a></span></div>
+    <div class="fn"><span class="fn-num">3</span><span>9to5Mac — "Perplexity's Personal Computer is a cloud-based AI agent running on Mac mini", 11 mars 2026. <a href="https://9to5mac.com/2026/03/11/perplexitys-personal-computer-is-a-cloud-based-ai-agent-running-on-mac-mini/">9to5mac.com</a></span></div>
+    <div class="fn"><span class="fn-num">4</span><span>VentureBeat — "Perplexity takes its Computer AI agent into the enterprise", 12 mars 2026. Stats CrewAI et Fortune Business Insights sur le marché agentic AI. <a href="https://venturebeat.com/technology/perplexity-takes-its-computer-ai-agent-into-the-enterprise-taking-aim-at">venturebeat.com</a></span></div>
+    <div class="fn"><span class="fn-num">8</span><span>VentureBeat — "Anthropic launches Cowork, a Claude Desktop agent that works in your files", 12 janv. 2026. Genèse du produit, cas d'usages observés sur Claude Code. <a href="https://venturebeat.com/technology/anthropic-launches-cowork-a-claude-desktop-agent-that-works-in-your-files-no">venturebeat.com</a></span></div>
+    <div class="fn"><span class="fn-num">11</span><span>WinBuzzer — "Claude and Claude Code Can Now Control Your Windows Desktop", 4 avr. 2026. Expansion Windows, Dispatch feature, sécurité et prompt injection. <a href="https://winbuzzer.com/2026/04/04/anthropic-claude-desktop-control-windows-cowork-dispatch-xcxwbn/">winbuzzer.com</a></span></div>
+    <div class="fn"><span class="fn-num">14</span><span>AI.cc — "How to Use Claude Cowork in 2026", mars 2026. Guide utilisateur et retours d'early adopters. <a href="https://www.ai.cc/blogs/how-to-use-claude-cowork-2026-step-by-step-guide/">ai.cc</a></span></div>
+    <div class="fn"><span class="fn-num">15</span><span>9to5Mac — "Anthropic scales up with enterprise features for Claude Cowork and Managed Agents", 9 avr. 2026. Sortie de preview, nouvelles features enterprise. <a href="https://9to5mac.com/2026/04/09/anthropic-scales-up-with-enterprise-features-for-claude-cowork-and-managed-agents/">9to5mac.com</a></span></div>
+    <div class="fn"><span class="fn-num">16</span><span>Medium / Basukori — "From Chatbots to Autonomous Co-Workers", 9 avr. 2026. Chronologie du passage chatbot → agents, lancement Operator jan. 2025. <a href="https://medium.com/@basukori8463/from-chatbots-to-autonomous-co-workers-the-complete-ai-agents-roadmap-up-to-april-2026-fb56dc79e240">medium.com</a></span></div>
+    <div class="fn"><span class="fn-num">18</span><span>OpenAI — "Introducing Operator", puis mise à jour juillet 2025 : intégration dans ChatGPT Agent, abandon du standalone. <a href="https://openai.com/index/introducing-operator/">openai.com</a></span></div>
+  </div>
+
+</article>
+
+<footer>
+  <a href="index.html">Essais · Mickaël Kasinski</a> · La fin des chatbots · Analyse éditoriale · Avril 2026
+</footer>
+
+</body>
+</html>
